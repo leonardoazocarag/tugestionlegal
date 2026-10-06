@@ -44,4 +44,4 @@ Pendientes: **`RESEND_API_KEY`**, smoke Stripe UI, backup MySQL, opcional alinea
 
 ## Fuentes
 
-- `DEPLOY.md` · `DNS_RAILWAY.md` · `EMAIL_RESEND.md` · `STRIPE.md` · `BACKUP_RAILWAY.md`
+- `DEPLOY.md` · `DEPLOY_RAIOLA.md` · `DNS_RAILWAY.md` · `EMAIL_RESEND.md` · `STRIPE.md` · `BACKUP_RAILWAY.md`
