@@ -1,8 +1,10 @@
 import { useRoute, Link } from "wouter";
 import { trpc } from "@/lib/trpc";
+import { getSamplePostBySlug } from "@shared/blogSamples";
 import { motion } from "framer-motion";
 import { ArrowLeft, Calendar, Loader2, Share2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useMemo } from "react";
 
 function ShareButtons({ title, url }: { title: string; url: string }) {
   const encodedUrl = encodeURIComponent(url);
@@ -46,8 +48,16 @@ function ShareButtons({ title, url }: { title: string; url: string }) {
 
 export default function BlogPost() {
   const [, params] = useRoute("/blog/:slug");
-  const slug = params?.slug || "";
-  const { data: post, isLoading } = trpc.blog.bySlug.useQuery({ slug }, { enabled: !!slug });
+  const slug = useMemo(() => {
+    const raw = params?.slug || "";
+    try {
+      return decodeURIComponent(raw).trim();
+    } catch {
+      return raw.trim();
+    }
+  }, [params?.slug]);
+  const { data: dbPost, isLoading } = trpc.blog.bySlug.useQuery({ slug }, { enabled: !!slug });
+  const post = dbPost ?? getSamplePostBySlug(slug) ?? null;
 
   const currentUrl = typeof window !== "undefined" ? window.location.href : "";
 

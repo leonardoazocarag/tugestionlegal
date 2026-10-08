@@ -271,7 +271,13 @@ export async function getAllPosts() {
 export async function getPostBySlug(slug: string) {
   const db = await getDb();
   if (!db) return undefined;
-  const result = await db.select().from(blogPosts).where(eq(blogPosts.slug, slug)).limit(1);
+  let normalized = slug.trim();
+  try {
+    normalized = decodeURIComponent(normalized);
+  } catch {
+    /* keep trimmed */
+  }
+  const result = await db.select().from(blogPosts).where(eq(blogPosts.slug, normalized)).limit(1);
   return result.length > 0 ? result[0] : undefined;
 }
 

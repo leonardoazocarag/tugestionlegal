@@ -4,16 +4,20 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Calendar } from "@/components/ui/calendar";
 import { ALL_BOOKABLE_SERVICES } from "@shared/bookableServices";
-import { ASESORIAS } from "@shared/data";
+import { ASESORIAS, CONTACT_INFO } from "@shared/data";
 import { trpc } from "@/lib/trpc";
 import { CalendarIcon, Clock, CheckCircle, Loader2, Info, Video, Building } from "lucide-react";
 import { toast } from "sonner";
-import { format, addDays, isBefore, startOfDay, isSaturday, isSunday } from "date-fns";
+import { format, addDays, isBefore, isSameDay, startOfDay, isSaturday, isSunday } from "date-fns";
 import { es } from "date-fns/locale";
 import { useSearch } from "wouter";
+
+const ASESORIA_BLURBS: Record<string, string> = {
+  "asesoria-videoconferencia": "Consulta online desde cualquier lugar. Ideal para orientación rápida sobre tu caso.",
+  "asesoria-inmobiliaria": "Asesoramiento especializado en compraventa y alquiler.",
+};
 
 // Time slots: L-V morning 9-12, afternoon 17-19; Saturday 10-13
 const TIME_SLOTS_WEEKDAY_MORNING = ["09:00", "10:00", "11:00", "12:00"];
@@ -108,12 +112,17 @@ export default function Reservas() {
     },
   });
 
+  // Mínimo 2 días de antelación: no permitir reservas "de un día para otro"
+  const minBookableDate = useMemo(() => addDays(startOfDay(new Date()), 2), []);
   const tomorrow = useMemo(() => addDays(startOfDay(new Date()), 1), []);
 
-  // Disable Sundays, past dates, and Spanish national holidays
   const disabledDays = (date: Date) => {
-    return isBefore(date, tomorrow) || isSunday(date) || isSpanishHoliday(date);
+    return isBefore(date, minBookableDate) || isSunday(date) || isSpanishHoliday(date);
   };
+
+  const isNextDayBlocked = selectedDate
+    ? isSameDay(selectedDate, tomorrow) || isBefore(selectedDate, minBookableDate)
+    : false;
 
   // Determine available time slots based on selected day
   const availableSlots = useMemo(() => {
@@ -173,7 +182,10 @@ export default function Reservas() {
               Hemos recibido tu solicitud de cita. Recibirás un email de confirmación cuando revisemos tu reserva.
             </p>
             <p className="text-sm text-gray-500 mb-8">
-              Si necesitas algo urgente, no dudes en contactarnos por WhatsApp.
+              Si necesitas algo urgente, no dudes en contactarnos por{" "}
+              <a href={CONTACT_INFO.whatsapp} target="_blank" rel="noopener noreferrer" className="text-[#C19D4E] underline">
+                WhatsApp
+              </a>.
             </p>
             <Button onClick={resetForm} className="bg-[#112250] hover:bg-[#1a2d5e] text-white">
               Hacer Otra Reserva
@@ -209,25 +221,53 @@ export default function Reservas() {
               <Card className="border-0 shadow-lg">
                 <CardContent className="p-8">
                   <form onSubmit={handleSubmit} className="space-y-6">
-                    {/* Service Selection */}
+                    {/* Service Selection — cards */}
                     <div>
-                      <Label className="text-sm font-semibold text-[#112250] mb-2 block">Tipo de Asesoría *</Label>
-                      <Select value={formData.serviceType} onValueChange={(v) => setFormData({ ...formData, serviceType: v })}>
-                        <SelectTrigger className="bg-white">
-                          <SelectValue placeholder="Selecciona una asesoría" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {ALL_BOOKABLE_SERVICES.map((s) => (
-                            <SelectItem key={s.id} value={s.name}>
-                              <span className="flex items-center gap-2">
-                                {s.id === "asesoria-videoconferencia" && <Video className="w-4 h-4 text-[#C19D4E]" />}
-                                {s.id === "asesoria-inmobiliaria" && <Building className="w-4 h-4 text-[#C19D4E]" />}
-                                {s.name}
-                              </span>
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
+                      <Label className="text-sm font-semibold text-[#112250] mb-3 block">Tipo de Asesoría *</Label>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        {ASESORIAS.map((a) => {
+                          const selected = formData.serviceType === a.name;
+                          const isVideo = a.id === "asesoria-videoconferencia";
+                          return (
+                            <button
+                              key={a.id}
+                              type="button"
+                              onClick={() => setFormData({ ...formData, serviceType: a.name })}
+                              className={`relative text-left rounded-xl border-2 p-4 transition-all bg-white ${
+                                selected
+                                  ? "border-[#C19D4E] shadow-md"
+                                  : "border-gray-200 hover:border-[#C19D4E]/50"
+                              }`}
+                            >
+                              {selected && (
+                                <span className="absolute top-3 right-3 w-6 h-6 rounded-full bg-[#C19D4E] text-white flex items-center justify-center">
+                                  <CheckCircle className="w-4 h-4" />
+                                </span>
+                              )}
+                              <div className={`w-10 h-10 rounded-lg flex items-center justify-center mb-3 ${
+                                selected ? "bg-[#C19D4E]/15" : "bg-gray-100"
+                              }`}>
+                                {isVideo ? (
+                                  <Video className={`w-5 h-5 ${selected ? "text-[#C19D4E]" : "text-[#112250]"}`} />
+                                ) : (
+                                  <Building className={`w-5 h-5 ${selected ? "text-[#C19D4E]" : "text-[#112250]"}`} />
+                                )}
+                              </div>
+                              <p className={`font-bold text-sm mb-1 ${selected ? "text-[#C19D4E]" : "text-[#0A1635]"}`}>
+                                {a.name}
+                              </p>
+                              <p className="text-xs text-gray-500 line-clamp-2 mb-3">
+                                {ASESORIA_BLURBS[a.id] || a.description}
+                              </p>
+                              <div className="flex items-center gap-2 text-sm">
+                                <span className="font-bold text-[#0A1635]">{a.price}€</span>
+                                <span className="text-gray-300">|</span>
+                                <span className="text-gray-500">Máx. {a.duration.replace(" minutos", " min")}</span>
+                              </div>
+                            </button>
+                          );
+                        })}
+                      </div>
                     </div>
 
                     {/* Calendar and Time */}
@@ -266,7 +306,7 @@ export default function Reservas() {
                               </p>
                               <div className="grid grid-cols-3 gap-2">
                                 {availableSlots.morning.map((t) => {
-                                  const isOccupied = occupiedSlots.includes(t);
+                                  const isOccupied = isNextDayBlocked || occupiedSlots.includes(t);
                                   return (
                                     <button
                                       key={t}
@@ -293,7 +333,7 @@ export default function Reservas() {
                                 <p className="text-xs text-gray-500 font-medium mb-2 uppercase tracking-wider">Tarde</p>
                                 <div className="grid grid-cols-3 gap-2">
                                   {availableSlots.afternoon.map((t) => {
-                                    const isOccupied = occupiedSlots.includes(t);
+                                    const isOccupied = isNextDayBlocked || occupiedSlots.includes(t);
                                     return (
                                       <button
                                         key={t}
@@ -359,8 +399,8 @@ export default function Reservas() {
                       <Textarea
                         value={formData.message}
                         onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                        placeholder="Describe brevemente tu consulta o situación..."
-                        rows={4}
+                        placeholder="Comparte en este espacio (de forma muy breve) tu caso y las dudas que quieres aclarar. Esto le permitirá al profesional tener una idea general de la situación y sacar el máximo provecho al tiempo reservado para tu sesión."
+                        rows={5}
                         className="bg-white"
                       />
                     </div>
@@ -378,7 +418,7 @@ export default function Reservas() {
                     </Button>
 
                     <p className="text-xs text-gray-500 text-center">
-                      Tras el pago seguro con Stripe, recibirás confirmación de la cita por email.
+                      Tras el pago seguro con Stripe, recibirás un email de confirmación de la cita.
                     </p>
                   </form>
                 </CardContent>
@@ -473,7 +513,7 @@ export default function Reservas() {
                     <div>
                       <p className="text-sm font-semibold text-[#112250] mb-1">Nota importante</p>
                       <p className="text-xs text-gray-600">
-                        Las citas son de 1 hora. Las reservas están sujetas a confirmación. Los horarios ocupados aparecen deshabilitados.
+                        Las asesorías tienen una duración máxima de 45 minutos. Las reservas están sujetas a confirmación. Los horarios ocupados aparecen deshabilitados. No es posible reservar de un día para otro.
                       </p>
                     </div>
                   </div>

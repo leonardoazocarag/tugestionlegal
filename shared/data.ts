@@ -134,12 +134,12 @@ export const SERVICIOS_ADMINISTRATIVOS = [
   {
     id: "aeat",
     name: "AEAT",
-    description: "Trámites y gestiones ante la Agencia Tributaria: declaraciones de IRPF, IVA, certificados tributarios y consultas fiscales.",
+    description: "Trámites y gestiones ante la Agencia Tributaria: declaraciones de IRPF, certificados tributarios, consultas fiscales, sanciones, procedimiento sancionador, entre otros.",
   },
   {
     id: "seguridad-social",
     name: "Seguridad Social",
-    description: "Gestiones ante la Seguridad Social: altas, bajas, vida laboral, prestaciones, informes de cotización y más.",
+    description: "Gestiones ante la Seguridad Social: vida laboral, prestaciones, informes de cotización, sanciones, devolución de ingresos indebidos y más.",
   },
   {
     id: "ibi",
@@ -170,16 +170,6 @@ export const SERVICIOS_ADMINISTRATIVOS = [
     id: "certificado-digital",
     name: "Certificado Digital",
     description: "Asistencia en la obtención y renovación del certificado digital de persona física o jurídica ante la FNMT.",
-  },
-  {
-    id: "vida-laboral",
-    name: "Vida Laboral",
-    description: "Obtención del informe de vida laboral ante la Seguridad Social y asesoramiento sobre su contenido.",
-  },
-  {
-    id: "empadronamiento",
-    name: "Empadronamiento",
-    description: "Gestión del alta, modificación o baja en el padrón municipal. Trámite esencial para múltiples gestiones administrativas y de extranjería.",
   },
 ] as const;
 

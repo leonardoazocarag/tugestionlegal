@@ -36,7 +36,7 @@ const SERVICE_SECTIONS = [
     title: "Servicios Administrativos",
     desc: "Gestión de trámites administrativos, impuestos, certificados y gestiones con ayuntamientos. Simplificamos tu burocracia.",
     href: "/servicios-administrativos",
-    features: ["Transferencia de Coche", "IRPF / IBI / IVTM", "Certificado Digital", "Empadronamiento"],
+    features: ["Transferencia de Coche", "IRPF / IBI / IVTM", "Certificado Digital", "Gestiones AEAT"],
     color: "from-[#5D0018]/20 to-[#5D0018]/10",
   },
   {

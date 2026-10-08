@@ -19,6 +19,8 @@ interface BookingEmailData {
   message?: string;
   confirmUrl: string;
   rejectUrl: string;
+  /** Enlace para añadir la cita a Google Calendar (p. ej. tras pago confirmado). */
+  calendarUrl?: string;
 }
 
 export async function sendBookingNotificationToAdmin(data: BookingEmailData): Promise<boolean> {
@@ -77,15 +79,21 @@ export async function sendBookingNotificationToAdmin(data: BookingEmailData): Pr
         </tr>` : ""}
       </table>
       <div style="margin-top:30px;text-align:center;">
+        ${data.calendarUrl ? `
+        <a href="${data.calendarUrl}" target="_blank" style="display:inline-block;padding:14px 32px;background-color:#16a34a;color:#ffffff;text-decoration:none;border-radius:8px;font-weight:600;font-size:16px;margin:0 8px 8px;">
+          \ud83d\udcc5 A\u00f1adir a Google Calendar
+        </a>` : `
         <a href="${data.confirmUrl}" style="display:inline-block;padding:14px 32px;background-color:#16a34a;color:#ffffff;text-decoration:none;border-radius:8px;font-weight:600;font-size:16px;margin:0 8px 8px;">
           \u2713 Confirmar Cita
         </a>
         <a href="${data.rejectUrl}" style="display:inline-block;padding:14px 32px;background-color:#dc2626;color:#ffffff;text-decoration:none;border-radius:8px;font-weight:600;font-size:16px;margin:0 8px 8px;">
           \u2717 Rechazar Cita
-        </a>
+        </a>`}
       </div>
       <p style="margin-top:16px;font-size:13px;color:#666;text-align:center;">
-        Al confirmar, podr\u00e1s a\u00f1adir la cita a tu Google Calendar directamente desde la p\u00e1gina de confirmaci\u00f3n.
+        ${data.calendarUrl
+          ? "El cliente ya pag\u00f3 y la cita est\u00e1 confirmada. A\u00f1ade el evento a tu Google Calendar con el bot\u00f3n superior."
+          : "Al confirmar, podr\u00e1s a\u00f1adir la cita a tu Google Calendar directamente desde la p\u00e1gina de confirmaci\u00f3n."}
       </p>
       <p style="margin-top:20px;font-size:12px;color:#999;text-align:center;">
         También puedes gestionar las reservas desde el <a href="${data.confirmUrl.split('/api/')[0]}/admin/reservas" style="color:#C19D4E;">panel de administración</a>.
@@ -110,6 +118,8 @@ interface BookingStatusEmailData {
   date: string;
   time: string;
   status: "confirmed" | "rejected";
+  /** Si true, muestra bloque de pago confirmado (flujo Stripe). */
+  paid?: boolean;
 }
 
 export async function sendBookingStatusToClient(data: BookingStatusEmailData): Promise<boolean> {
@@ -156,7 +166,8 @@ export async function sendBookingStatusToClient(data: BookingStatusEmailData): P
       </p>
       ${isConfirmed ? `
       <div style="background-color:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:16px;margin:20px 0;">
-        <p style="margin:0 0 12px;color:#166534;font-size:14px;"><strong>📝 Prepara tu cita:</strong></p>
+        ${data.paid ? `<p style="margin:0 0 12px;color:#166534;font-size:14px;">\u2705 <strong>Pago confirmado</strong> — Tu pago ha sido procesado correctamente.</p>` : ""}
+        <p style="margin:0 0 12px;color:#166534;font-size:14px;"><strong>\ud83d\udcdd Prepara tu cita:</strong></p>
         <ul style="margin:0;padding-left:20px;color:#166534;font-size:14px;line-height:1.8;">
           <li>Lleva todas tus dudas anotadas para optimizar el tiempo de consulta.</li>
           <li>Ten preparados los documentos que consideres relevantes para tu caso.</li>

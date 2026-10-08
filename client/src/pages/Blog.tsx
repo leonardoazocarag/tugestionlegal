@@ -2,96 +2,14 @@ import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { trpc } from "@/lib/trpc";
+import { SAMPLE_BLOG_POSTS } from "@shared/blogSamples";
 import { motion } from "framer-motion";
 import { BookOpen, Calendar, ArrowRight, Loader2, Mail, CheckCircle } from "lucide-react";
-import { Streamdown } from "streamdown";
 import { useState } from "react";
 import { toast } from "sonner";
 
 const fadeUp = { hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6 } } };
 const stagger = { visible: { transition: { staggerChildren: 0.1 } } };
-
-// Sample blog posts for display when DB is empty
-const SAMPLE_POSTS = [
-  {
-    id: 1,
-    title: "Guía completa del arraigo social en 2025",
-    slug: "guia-arraigo-social-2025",
-    excerpt: "Todo lo que necesitas saber sobre los requisitos, documentación y proceso para solicitar el arraigo social en España. Actualizado con los últimos cambios normativos.",
-    category: "Extranjería",
-    createdAt: new Date("2025-12-15"),
-    published: true,
-    content: "",
-    imageUrl: null,
-    authorId: null,
-    updatedAt: new Date(),
-  },
-  {
-    id: 2,
-    title: "Nuevos requisitos para la nacionalidad española por residencia",
-    slug: "requisitos-nacionalidad-espanola",
-    excerpt: "Descubre los cambios recientes en los requisitos para obtener la nacionalidad española. Analizamos las pruebas CCSE y DELE, plazos y documentación necesaria.",
-    category: "Nacionalidad",
-    createdAt: new Date("2025-11-20"),
-    published: true,
-    content: "",
-    imageUrl: null,
-    authorId: null,
-    updatedAt: new Date(),
-  },
-  {
-    id: 3,
-    title: "Cómo apostillar documentos venezolanos desde España",
-    slug: "apostillar-documentos-venezolanos",
-    excerpt: "Guía paso a paso para apostillar tus documentos venezolanos sin necesidad de viajar a Venezuela. Proceso, tiempos y costes actualizados.",
-    category: "Trámites Venezolanos",
-    createdAt: new Date("2025-10-05"),
-    published: true,
-    content: "",
-    imageUrl: null,
-    authorId: null,
-    updatedAt: new Date(),
-  },
-  {
-    id: 4,
-    title: "Renovación de residencia: errores comunes y cómo evitarlos",
-    slug: "renovacion-residencia-errores",
-    excerpt: "Los errores más frecuentes al renovar la tarjeta de residencia y cómo evitarlos. Plazos, documentación y consejos prácticos.",
-    category: "Extranjería",
-    createdAt: new Date("2025-09-12"),
-    published: true,
-    content: "",
-    imageUrl: null,
-    authorId: null,
-    updatedAt: new Date(),
-  },
-  {
-    id: 5,
-    title: "Reagrupación familiar: todo lo que debes saber",
-    slug: "reagrupacion-familiar-guia",
-    excerpt: "Guía completa sobre el proceso de reagrupación familiar en España. Requisitos económicos, vivienda y documentación necesaria.",
-    category: "Extranjería",
-    createdAt: new Date("2025-08-28"),
-    published: true,
-    content: "",
-    imageUrl: null,
-    authorId: null,
-    updatedAt: new Date(),
-  },
-  {
-    id: 6,
-    title: "Diferencias entre arraigo social, laboral y familiar",
-    slug: "diferencias-arraigos",
-    excerpt: "Analizamos las diferencias clave entre los tres tipos de arraigo disponibles en España y cuál se adapta mejor a tu situación.",
-    category: "Extranjería",
-    createdAt: new Date("2025-07-15"),
-    published: true,
-    content: "",
-    imageUrl: null,
-    authorId: null,
-    updatedAt: new Date(),
-  },
-];
 
 function NewsletterForm() {
   const [email, setEmail] = useState("");
@@ -112,7 +30,9 @@ function NewsletterForm() {
       <div className="flex flex-col items-center gap-3 py-4">
         <CheckCircle className="w-10 h-10 text-green-500" />
         <p className="text-[#112250] font-semibold">Suscripción confirmada</p>
-        <p className="text-gray-600 text-sm">Recibirás nuestras novedades legales semanales en tu email.</p>
+        <p className="text-gray-600 text-sm">
+          Recibirás novedades legales semanales. En tu primera asesoría o trámite, indica que estás suscrito para aplicar el 10% de descuento.
+        </p>
       </div>
     );
   }
@@ -154,7 +74,7 @@ function NewsletterForm() {
 
 export default function Blog() {
   const { data: posts, isLoading } = trpc.blog.published.useQuery();
-  const displayPosts = posts && posts.length > 0 ? posts : SAMPLE_POSTS;
+  const displayPosts = posts && posts.length > 0 ? posts : SAMPLE_BLOG_POSTS;
 
   return (
     <>
@@ -205,7 +125,7 @@ export default function Blog() {
                             {new Date(post.createdAt).toLocaleDateString("es-ES", { day: "numeric", month: "short", year: "numeric" })}
                           </span>
                         </div>
-                        <h3 className="text-lg font-bold text-[#112250] mb-2 group-hover:text-[#C19D4E] transition-colors line-clamp-2" style={{ fontFamily: "var(--font-heading)" }}>
+                        <h3 className="text-lg font-bold text-[#0A1635] mb-2 group-hover:text-[#C19D4E] transition-colors line-clamp-2" style={{ fontFamily: "var(--font-heading)" }}>
                           {post.title}
                         </h3>
                         <p className="text-sm text-gray-600 leading-relaxed line-clamp-3">{post.excerpt}</p>
@@ -223,7 +143,6 @@ export default function Blog() {
         </div>
       </section>
 
-      {/* Newsletter Subscription */}
       <section className="py-16 bg-white">
         <div className="container">
           <motion.div
@@ -235,10 +154,11 @@ export default function Blog() {
           >
             <Mail className="w-12 h-12 text-[#C19D4E] mx-auto mb-4" />
             <h2 className="text-2xl font-bold text-[#112250] mb-3" style={{ fontFamily: "var(--font-heading)" }}>
-              Recibe las novedades legales en tu email
+              Suscríbete y obtén un 10% de descuento
             </h2>
             <p className="text-gray-600 mb-6">
-              Suscríbete a nuestro newsletter semanal y mantente informado sobre cambios legislativos, sentencias relevantes y consejos prácticos.
+              Únete al newsletter semanal de Tu Gestión Legal: novedades legales, sentencias relevantes y consejos prácticos.
+              Además, disfruta de un <strong className="text-[#112250]">10% de descuento</strong> en tu primera asesoría o trámite.
             </p>
             <NewsletterForm />
           </motion.div>

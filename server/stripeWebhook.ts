@@ -85,6 +85,13 @@ export async function handleStripeWebhook(
       const baseUrl = resolvePublicBaseUrl();
       const confirmUrl = `${baseUrl}/api/booking-action?id=${booking.id}&action=confirm`;
       const rejectUrl = `${baseUrl}/api/booking-action?id=${booking.id}&action=reject`;
+      const { buildGoogleCalendarUrl } = await import("./calendarLink");
+      const calendarUrl = buildGoogleCalendarUrl({
+        serviceType: booking.serviceType,
+        date: booking.date,
+        time: booking.time,
+        name: booking.name,
+      });
 
       try {
         await sendBookingNotificationToAdmin({
@@ -98,6 +105,7 @@ export async function handleStripeWebhook(
           message: booking.message || undefined,
           confirmUrl,
           rejectUrl,
+          calendarUrl,
         });
       } catch (e) {
         console.error("[Stripe] Admin email failed:", e);
@@ -111,6 +119,7 @@ export async function handleStripeWebhook(
           date: booking.date,
           time: booking.time,
           status: "confirmed",
+          paid: true,
         });
       } catch (e) {
         console.error("[Stripe] Client email failed:", e);

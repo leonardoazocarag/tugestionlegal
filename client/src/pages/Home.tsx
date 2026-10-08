@@ -44,7 +44,7 @@ const SERVICE_BLOCKS = [
     icon: FileText,
     illustration: ICON_DOCUMENTOS,
     title: "Servicios Administrativos",
-    desc: "DGT, AEAT, Seguridad Social, IBI, IVTM, certificados, empadronamiento, certificado digital y gestiones con ayuntamientos.",
+    desc: "DGT, AEAT, Seguridad Social, IBI, IVTM, certificados, certificado digital y gestiones con ayuntamientos.",
     href: "/servicios-administrativos",
     color: "from-[#5D0018] to-[#8a0025]",
   },

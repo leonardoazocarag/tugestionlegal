@@ -15,6 +15,7 @@ import {
   runSendReminders,
   startInternalJobTimers,
 } from "../jobs";
+import { buildGoogleCalendarUrl } from "../calendarLink";
 
 function isPortAvailable(port: number): Promise<boolean> {
   return new Promise(resolve => {
@@ -33,20 +34,6 @@ async function findAvailablePort(startPort: number = 3000): Promise<number> {
     }
   }
   throw new Error(`No available port found starting from ${startPort}`);
-}
-
-function buildGoogleCalendarUrl(booking: { serviceType: string; date: string; time: string; name: string }): string {
-  // date is yyyy-MM-dd, time is HH:mm
-  const [year, month, day] = booking.date.split("-").map(Number);
-  const [hour, minute] = booking.time.split(":").map(Number);
-  // Start time in UTC format (Spain is UTC+2 in summer, UTC+1 in winter - use Europe/Madrid)
-  const startDate = `${year}${String(month).padStart(2, "0")}${String(day).padStart(2, "0")}T${String(hour).padStart(2, "0")}${String(minute).padStart(2, "0")}00`;
-  // End time: 1 hour later
-  const endHour = hour + 1;
-  const endDate = `${year}${String(month).padStart(2, "0")}${String(day).padStart(2, "0")}T${String(endHour).padStart(2, "0")}${String(minute).padStart(2, "0")}00`;
-  const title = encodeURIComponent(`Asesor\u00eda - ${booking.name} (${booking.serviceType})`);
-  const details = encodeURIComponent(`Cliente: ${booking.name}\nServicio: ${booking.serviceType}\nHora: ${booking.time}`);
-  return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${startDate}/${endDate}&details=${details}&ctz=Europe/Madrid`;
 }
 
 function buildActionPage(title: string, message: string, type: "success" | "rejected" | "error" | "info", calendarUrl?: string): string {

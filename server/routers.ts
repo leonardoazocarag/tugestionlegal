@@ -128,6 +128,18 @@ export const appRouter = router({
         })
       )
       .mutation(async ({ input, ctx }) => {
+        // Antelación mínima: no permitir reservas de un día para otro (hoy ni mañana)
+        const minDate = new Date();
+        minDate.setHours(0, 0, 0, 0);
+        minDate.setDate(minDate.getDate() + 2);
+        const requested = new Date(`${input.date}T00:00:00`);
+        if (Number.isNaN(requested.getTime()) || requested < minDate) {
+          throw new TRPCError({
+            code: "BAD_REQUEST",
+            message: "Debes reservar con al menos 2 días de antelación. No es posible reservar de un día para otro.",
+          });
+        }
+
         const existingBookings = await getBookingsByDate(input.date);
         const slotTaken = existingBookings.some((b) => b.time === input.time);
         if (slotTaken) {

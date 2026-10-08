@@ -12,8 +12,6 @@ import {
   Award,
   Landmark,
   KeyRound,
-  ClipboardList,
-  MapPin,
   Calendar,
   MessageCircle,
   ArrowRight,
@@ -30,8 +28,6 @@ const ICON_MAP: Record<string, LucideIcon> = {
   "certificados": Award,
   "gestiones-ayuntamientos": Landmark,
   "certificado-digital": KeyRound,
-  "vida-laboral": ClipboardList,
-  "empadronamiento": MapPin,
 };
 
 export default function ServiciosAdministrativos() {
@@ -66,7 +62,7 @@ export default function ServiciosAdministrativos() {
                     <div className="w-12 h-12 rounded-xl bg-[#112250]/5 flex items-center justify-center mb-4">
                       <Icon className="w-6 h-6 text-[#112250]" />
                     </div>
-                    <h3 className="text-lg font-bold text-[#112250] mb-2 group-hover:text-[#C19D4E] transition-colors" style={{ fontFamily: "var(--font-heading)" }}>
+                    <h3 className="text-lg font-extrabold text-[#0A1635] mb-2 group-hover:text-[#C19D4E] transition-colors" style={{ fontFamily: "var(--font-heading)" }}>
                       {svc.name}
                     </h3>
                     <p className="text-sm text-gray-600 leading-relaxed mb-4">{svc.description}</p>

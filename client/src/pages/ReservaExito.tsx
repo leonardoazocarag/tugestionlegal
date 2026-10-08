@@ -24,18 +24,20 @@ export default function ReservaExito() {
             className="text-2xl font-bold text-[#112250] mb-4"
             style={{ fontFamily: "var(--font-heading)" }}
           >
-            ¡Gracias! Tu cita está confirmada
+            Reserva Enviada Correctamente
           </h2>
-          <p className="text-gray-600 mb-6">
-            Hemos recibido el pago. En breve te llegará un email con los detalles
-            de la asesoría. Si no lo ves, revisa spam.
+          <p className="text-gray-600 mb-2">
+            Hemos recibido tu pago y tu cita ha sido confirmada. Te hemos enviado un email de confirmación.
+          </p>
+          <p className="text-sm text-gray-500 mb-8">
+            Si necesitas algo urgente, no dudes en contactarnos por WhatsApp.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Button asChild className="bg-[#112250] hover:bg-[#1a2d5e]">
-              <Link href="/">Ir al inicio</Link>
+              <Link href="/reservas">Hacer Otra Reserva</Link>
             </Button>
             <Button asChild variant="outline">
-              <Link href="/reservas">Nueva reserva</Link>
+              <Link href="/">Ir al inicio</Link>
             </Button>
           </div>
         </div>
