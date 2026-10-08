@@ -8,7 +8,6 @@ import {
   RefreshCw,
   Users,
   CreditCard,
-  Briefcase,
   GraduationCap,
   Flag,
   Scale,
@@ -27,7 +26,6 @@ const ICON_MAP: Record<string, LucideIcon> = {
   "renovaciones": RefreshCw,
   "reagrupacion-familiar": Users,
   "tarjeta-comunitaria": CreditCard,
-  "permisos-trabajo": Briefcase,
   "estancia-estudios": GraduationCap,
   "nacionalidad-espanola": Flag,
   "recursos-administrativos": Scale,
@@ -47,7 +45,7 @@ export default function ServiciosJuridicos() {
             </h1>
             <p className="text-white/80 text-lg leading-relaxed">
               Servicios jurídicos especializados en extranjería, nacionalidad y recursos administrativos.
-              Residencias, arraigos, reagrupación familiar, permisos de trabajo y más. Te acompañamos en cada paso del proceso.
+              Residencias, arraigos, reagrupación familiar y más. Te acompañamos en cada paso del proceso.
             </p>
           </div>
         </div>
@@ -66,7 +64,7 @@ export default function ServiciosJuridicos() {
                         <Icon className="w-6 h-6 text-[#C19D4E]" />
                       </div>
                       <div className="flex-1">
-                        <h3 className="text-lg font-bold text-[#112250] mb-2" style={{ fontFamily: "var(--font-heading)" }}>{t.name}</h3>
+                        <h3 className="text-lg font-extrabold text-[#0A1635] mb-2" style={{ fontFamily: "var(--font-heading)" }}>{t.name}</h3>
                         <p className="text-sm text-gray-600 leading-relaxed mb-4">{t.description}</p>
 
                         {"packs" in t && t.packs && (

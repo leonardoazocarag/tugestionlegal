@@ -7,6 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Calendar } from "@/components/ui/calendar";
 import { ALL_BOOKABLE_SERVICES } from "@shared/bookableServices";
+import { ASESORIAS } from "@shared/data";
 import { trpc } from "@/lib/trpc";
 import { CalendarIcon, Clock, CheckCircle, Loader2, Info, Video, Building } from "lucide-react";
 import { toast } from "sonner";
@@ -390,26 +391,31 @@ export default function Reservas() {
                 <CardContent className="p-6">
                   <h3 className="text-lg font-bold mb-4" style={{ fontFamily: "var(--font-heading)" }}>Asesorías Disponibles</h3>
                   <div className="space-y-3 text-sm">
-                    <div className="p-3 bg-white/5 rounded-lg">
-                      <div className="flex items-center justify-between mb-1">
-                        <div className="flex items-center gap-2">
-                          <Video className="w-4 h-4 text-[#C19D4E]" />
-                          <p className="font-semibold text-[#C19D4E]">Videoconferencia</p>
+                    {ASESORIAS.map((a) => {
+                      const isVideo = a.id === "asesoria-videoconferencia";
+                      return (
+                        <div key={a.id} className="p-3 bg-white/5 rounded-lg">
+                          <div className="flex items-center justify-between mb-1">
+                            <div className="flex items-center gap-2">
+                              {isVideo ? (
+                                <Video className="w-4 h-4 text-[#C19D4E]" />
+                              ) : (
+                                <Building className="w-4 h-4 text-[#C19D4E]" />
+                              )}
+                              <p className="font-semibold text-[#C19D4E]">
+                                {isVideo ? "Videoconferencia" : "Inmobiliaria"}
+                              </p>
+                            </div>
+                            <span className="font-bold text-white">{a.price}€</span>
+                          </div>
+                          <p className="text-white/70 text-xs">
+                            {isVideo
+                              ? `Sesión personalizada de ${a.duration.replace(" minutos", " min")} por Zoom/Meet`
+                              : "Asesoría legal en compraventa y alquiler"}
+                          </p>
                         </div>
-                        <span className="font-bold text-white">45€</span>
-                      </div>
-                      <p className="text-white/70 text-xs">Sesión personalizada de 30 min por Zoom/Meet</p>
-                    </div>
-                    <div className="p-3 bg-white/5 rounded-lg">
-                      <div className="flex items-center justify-between mb-1">
-                        <div className="flex items-center gap-2">
-                          <Building className="w-4 h-4 text-[#C19D4E]" />
-                          <p className="font-semibold text-[#C19D4E]">Inmobiliaria</p>
-                        </div>
-                        <span className="font-bold text-white">60€</span>
-                      </div>
-                      <p className="text-white/70 text-xs">Asesoría legal en compraventa y alquiler</p>
-                    </div>
+                      );
+                    })}
                   </div>
                 </CardContent>
               </Card>

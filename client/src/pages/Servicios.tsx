@@ -21,7 +21,7 @@ const SERVICE_SECTIONS = [
     desc: "Asesorías por videoconferencia y asesoría inmobiliaria. Orientación profesional adaptada a tu caso.",
     href: "/asesorias",
     features: ["Asesoría por Videoconferencia", "Asesoría Inmobiliaria"],
-    color: "from-[#C19D4E]/10 to-[#C19D4E]/5",
+    color: "from-[#C19D4E]/20 to-[#C19D4E]/10",
   },
   {
     icon: Scale,
@@ -29,7 +29,7 @@ const SERVICE_SECTIONS = [
     desc: "Extranjería, nacionalidad española y recursos administrativos. Gestión integral de tu situación migratoria y legal en España.",
     href: "/servicios-juridicos",
     features: ["Residencias y Arraigos", "Reagrupación Familiar", "Nacionalidad Española", "Recursos Administrativos"],
-    color: "from-[#112250]/10 to-[#112250]/5",
+    color: "from-[#112250]/20 to-[#112250]/10",
   },
   {
     icon: Briefcase,
@@ -37,7 +37,7 @@ const SERVICE_SECTIONS = [
     desc: "Gestión de trámites administrativos, impuestos, certificados y gestiones con ayuntamientos. Simplificamos tu burocracia.",
     href: "/servicios-administrativos",
     features: ["Transferencia de Coche", "IRPF / IBI / IVTM", "Certificado Digital", "Empadronamiento"],
-    color: "from-[#5D0018]/10 to-[#5D0018]/5",
+    color: "from-[#5D0018]/20 to-[#5D0018]/10",
   },
   {
     icon: Globe,
@@ -45,7 +45,7 @@ const SERVICE_SECTIONS = [
     desc: "Gestión de documentos y trámites en Venezuela desde España. Partidas, antecedentes penales, poderes y apostillas sin necesidad de viajar.",
     href: "/servicios-internacionales",
     features: ["Partidas de Nacimiento", "Antecedentes Penales", "Poderes", "Legalización y Apostilla"],
-    color: "from-[#C19D4E]/10 to-[#C19D4E]/5",
+    color: "from-[#C19D4E]/20 to-[#C19D4E]/10",
   },
   {
     icon: FileText,
@@ -53,7 +53,7 @@ const SERVICE_SECTIONS = [
     desc: "Solicitud de partidas, tramitación ante notarías, legalización y apostilla en España, y redacción de documentos para consulados.",
     href: "/otros-servicios",
     features: ["Solicitud de Partidas", "Documentos Notariales", "Legalización en España", "Documentos para Consulados"],
-    color: "from-[#112250]/10 to-[#112250]/5",
+    color: "from-[#112250]/20 to-[#112250]/10",
   },
   {
     icon: Package,
@@ -61,7 +61,7 @@ const SERVICE_SECTIONS = [
     desc: "Paquetes diseñados para cubrir tus necesidades de forma integral. Packs de extranjería y de gestoría con atención personalizada.",
     href: "/packs",
     features: ["Pack Migrante", "Pack Post Jura", "Pack Asesoría Mensual", "Pack Trámites Express"],
-    color: "from-[#5D0018]/10 to-[#5D0018]/5",
+    color: "from-[#5D0018]/20 to-[#5D0018]/10",
   },
 ];
 
@@ -96,9 +96,9 @@ export default function Servicios() {
                   <CardContent className="p-0">
                     <div className={`bg-gradient-to-br ${section.color} p-6 flex items-center gap-4`}>
                       <div className="w-14 h-14 rounded-xl bg-white shadow-sm flex items-center justify-center">
-                        <section.icon className="w-7 h-7 text-[#112250]" />
+                        <section.icon className="w-7 h-7 text-[#0A1635]" />
                       </div>
-                      <h3 className="text-xl font-bold text-[#112250] group-hover:text-[#C19D4E] transition-colors" style={{ fontFamily: "var(--font-heading)" }}>
+                      <h3 className="text-xl font-extrabold text-[#0A1635] group-hover:text-[#C19D4E] transition-colors" style={{ fontFamily: "var(--font-heading)" }}>
                         {section.title}
                       </h3>
                     </div>

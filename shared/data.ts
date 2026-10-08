@@ -18,12 +18,12 @@ export const ASESORIAS = [
     id: "asesoria-videoconferencia",
     name: "Asesoría por Videoconferencia",
     subtitle: "Zoom / Google Meet",
-    price: 45,
-    duration: "30 minutos",
+    price: 47,
+    duration: "45 minutos",
     targetAudience: "Clientes que necesitan orientación personalizada sobre su caso, ya sea de extranjería, administrativo o inmobiliario.",
     description: "Sesión personalizada por videoconferencia donde analizamos tu caso en detalle. Recibirás orientación profesional y un plan de acción claro.",
     includes: [
-      "Videollamada de 30 minutos",
+      "Videollamada de 45 minutos",
       "Análisis personalizado de tu caso",
       "Plan de acción detallado",
       "Resumen por email post-consulta",
@@ -78,15 +78,14 @@ export const SERVICIOS_EXTRANJERIA = [
   },
   {
     id: "tarjeta-comunitaria",
-    name: "Tarjeta Comunitaria",
-    description: "Solicitud de tarjeta de familiar de ciudadano de la Unión Europea. Tramitamos tu derecho a residir en España.",
-    requirements: ["Vínculo con ciudadano UE", "Certificado de registro del ciudadano UE", "Pasaporte", "Documentación acreditativa del vínculo"],
-  },
-  {
-    id: "permisos-trabajo",
-    name: "Permisos de Trabajo",
-    description: "Gestión de autorizaciones de trabajo por cuenta ajena o por cuenta propia. Te ayudamos a obtener tu permiso laboral.",
-    requirements: ["Oferta de empleo o plan de negocio", "Pasaporte", "Titulación (si aplica)", "Certificado de antecedentes penales"],
+    name: "Tarjeta de Familiar de Ciudadano Español / Comunitario",
+    description: "Solicitud de tarjeta de familiar de ciudadano español o de la Unión Europea. Tramitamos tu derecho a residir en España.",
+    requirements: [
+      "Vínculo con ciudadano español/UE.",
+      "Pasaporte",
+      "Documentación acreditativa del vínculo",
+      "Documentación específica según tipo solicitud.",
+    ],
   },
   {
     id: "estancia-estudios",
@@ -100,7 +99,14 @@ export const NACIONALIDAD = {
   id: "nacionalidad-espanola",
   name: "Nacionalidad Española",
   description: "Tramitación completa de la solicitud de nacionalidad española. Ofrecemos diferentes paquetes según tus necesidades.",
-  requirements: ["Residencia legal continuada", "Certificado de antecedentes penales", "CCSE aprobado", "DELE A2 o superior", "Empadronamiento"],
+  requirements: [
+    "Residencia legal continuada",
+    "Carecer de antecedentes penales",
+    "CCSE aprobado",
+    "DELE A2 o superior",
+    "Empadronamiento",
+    "Documentación específica según tipo solicitud.",
+  ],
   packs: [
     { id: "paquete-basico", name: "Paquete Básico", description: "Preparación y presentación de la solicitud de nacionalidad. Incluye revisión documental y seguimiento básico del expediente." },
     { id: "paquete-completo", name: "Paquete Completo", description: "Servicio integral: preparación, presentación, seguimiento continuo, recursos si es necesario y todos los trámites post-concesión (DNI, pasaporte, Seguridad Social)." },
@@ -111,7 +117,10 @@ export const RECURSOS_ADMINISTRATIVOS = {
   id: "recursos-administrativos",
   name: "Recursos Administrativos",
   description: "Interposición de recursos administrativos contra denegaciones o resoluciones desfavorables en materia de extranjería y nacionalidad.",
-  requirements: ["Resolución denegatoria", "Documentación del expediente original", "Pasaporte", "NIE"],
+  requirements: [
+    "Documentación del expediente original",
+    "Documentación específica según tipo solicitud.",
+  ],
 } as const;
 
 // ── SERVICIOS ADMINISTRATIVOS ──

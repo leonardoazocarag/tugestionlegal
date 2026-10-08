@@ -36,7 +36,7 @@ const SERVICE_BLOCKS = [
     icon: Scale,
     illustration: ICON_VISADOS,
     title: "Servicios Jurídicos",
-    desc: "Extranjería, nacionalidad y recursos administrativos. Residencias, arraigos, reagrupación familiar, permisos de trabajo y más.",
+    desc: "Extranjería, nacionalidad y recursos administrativos. Residencias, arraigos, reagrupación familiar y más.",
     href: "/servicios",
     color: "from-[#112250] to-[#1a3470]",
   },
