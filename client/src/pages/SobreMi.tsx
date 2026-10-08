@@ -4,7 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { motion } from "framer-motion";
 import { Shield, Target, Eye, Heart, Award, Users, Globe, Calendar, ArrowRight } from "lucide-react";
 
-const ABOUT_IMG = "https://d2xsxph8kpxj0f.cloudfront.net/310519663477079238/EPsBEv5tgtumuds5mHeEv6/about-team-Zu6438cr2XW5cx58ScKY6S.webp";
+const ABOUT_IMG = "/images/sobre-mi.png";
 
 const fadeUp = { hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6 } } };
 const stagger = { visible: { transition: { staggerChildren: 0.1 } } };
@@ -16,7 +16,7 @@ export default function SobreMi() {
       <section className="bg-[#112250] text-white py-20">
         <div className="container">
           <motion.div initial="hidden" animate="visible" variants={stagger} className="max-w-3xl">
-            <motion.span variants={fadeUp} className="text-[#C19D4E] text-sm font-semibold uppercase tracking-wider">Sobre Nosotros</motion.span>
+            <motion.span variants={fadeUp} className="text-[#C19D4E] text-sm font-semibold uppercase tracking-wider">Sobre Mí</motion.span>
             <motion.h1 variants={fadeUp} className="text-4xl lg:text-5xl font-bold mt-3 mb-6" style={{ fontFamily: "var(--font-heading)" }}>
               Conoce a Tu Gestión Legal
             </motion.h1>
@@ -34,7 +34,7 @@ export default function SobreMi() {
         <div className="container">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <motion.div initial={{ opacity: 0, x: -40 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
-              <img src={ABOUT_IMG} alt="Equipo Tu Gestión Legal" className="rounded-xl shadow-2xl w-full object-cover max-h-[500px]" />
+              <img src={ABOUT_IMG} alt="Tu Gestión Legal" className="rounded-xl shadow-2xl w-full object-cover max-h-[500px] object-top" />
             </motion.div>
             <motion.div initial={{ opacity: 0, x: 40 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
               <h2 className="text-3xl font-bold text-[#112250] mb-6" style={{ fontFamily: "var(--font-heading)" }}>
